@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kevin Chege — Portfolio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="styles.css">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Rajdhani:wght@400;500;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+
+</head>
+<body>
+
+<!-- Custom cursor -->
+<div class="cursor" id="cursor"></div>
+<div class="cursor-ring" id="cursorRing"></div>
+
+<!-- ── NAVBAR ──────────────────────────────────────────── -->
+<nav id="navbar">
+  <a href="#" class="nav-logo">KC<span>.</span></a>
+  <ul class="nav-links">
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#about">About</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <a href="https://github.com/kevchege" target="_blank" class="nav-cta">GitHub ↗</a>
+</nav>
+
+<!-- ── HERO ────────────────────────────────────────────── -->
+<section class="hero" id="home">
+  <div class="hero-bg"></div>
+  <div class="hero-circuit"></div>
+  <div class="hero-scanlines"></div>
+
+  <div class="hero-content">
+    <div class="hero-eyebrow">// Software Developer & IoT Engineer</div>
+    <h1 class="hero-name">
+      KEVIN<br><span class="highlight">CHEGE</span>
+    </h1>
+    <div class="hero-tagline">Building Africa's Tech Future</div>
+    <p class="hero-desc">
+      Computer Science undergraduate at Zetech University, Nairobi.
+      I build IoT systems, web platforms, and autonomous robotics.
+      Co-founder of Agroke — agri-tech for Kenyan farmers.
+      PARC 2025 AI League competitor.
+    </p>
+    <div class="hero-btns">
+      <a href="#projects" class="btn-primary">▶ &nbsp;Browse Projects</a>
+      <a href="#contact" class="btn-secondary">✉ &nbsp;Hire Me</a>
+    </div>
+    <div class="hero-stats">
+      <div>
+        <div class="stat-num">3+</div>
+        <div class="stat-label">Live Projects</div>
+      </div>
+      <div>
+        <div class="stat-num">2</div>
+        <div class="stat-label">Years Coding</div>
+      </div>
+      <div>
+        <div class="stat-num">1</div>
+        <div class="stat-label">Pan-African Competition</div>
+      </div>
+      <div>
+        <div class="stat-num">20+</div>
+        <div class="stat-label">Students Taught</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Floating terminal -->
+  <div class="hero-terminal">
+    <div class="terminal-bar">
+      <div class="t-dot r"></div>
+      <div class="t-dot y"></div>
+      <div class="t-dot g"></div>
+      <span class="terminal-title">kevin@portfolio:~$</span>
+    </div>
+    <div class="terminal-body">
+      <div><span class="t-prompt">❯ </span><span class="t-cmd">cat about.json</span></div>
+      <div class="t-comment">// Loading profile...</div>
+      <div><span class="t-key">name</span><span class="t-comment">: </span><span class="t-val">"Kevin Chege"</span></div>
+      <div><span class="t-key">role</span><span class="t-comment">: </span><span class="t-val">"Software Dev + IoT Eng"</span></div>
+      <div><span class="t-key">location</span><span class="t-comment">: </span><span class="t-val">"Nairobi, Kenya 🇰🇪"</span></div>
+      <div><span class="t-key">university</span><span class="t-comment">: </span><span class="t-val">"Zetech University"</span></div>
+      <div><span class="t-key">year</span><span class="t-comment">: </span><span class="t-val">3</span></div>
+      <div><span class="t-key">competition</span><span class="t-comment">: </span><span class="t-val">"PARC 2025 AI League 🏆"</span></div>
+      <div><span class="t-key">startup</span><span class="t-comment">: </span><span class="t-val">"Agroke (AgriTech)"</span></div>
+      <br>
+      <div><span class="t-prompt">❯ </span><span class="t-cmd">npm run build-future</span></div>
+      <div class="t-out">✓ Compiling dreams... done</div>
+      <div class="t-out">✓ Deploying to Africa... done</div>
+      <div><span class="t-prompt">❯ </span><span class="t-cursor"></span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ── PROJECTS ─────────────────────────────────────────── -->
+<div id="projects">
+
+<!-- ROW 1: IoT & Hardware -->
+<section class="reveal">
+  <div class="section-header">
+    <div class="section-cat"><span>01</span> — IoT & Hardware</div>
+    <div class="section-line"></div>
+    <div class="section-count">3 projects</div>
+  </div>
+  <div class="row-container">
+    <div class="project-row">
+
+      <div class="project-card">
+        <div class="card-thumb thumb-iot">
+          <div class="card-thumb-inner">🔌</div>
+          <div class="card-badge live">Live</div>
+        </div>
+        <div class="card-body">
+          <div class="card-title">Network Monitor</div>
+          <div class="card-desc">Python ARP-based network scanner that detects and tracks all devices on a local network. Stores sessions for comparison and new device alerts.</div>
+          <div class="card-tags">
+            <span class="tag">Python</span>
+            <span class="tag">ARP</span>
+            <span class="tag">Networking</span>
+            <span class="tag">CLI</span>
+          </div>
+          <div class="card-footer">
+            <a href="https://github.com/kevchege" target="_blank" class="card-link gh">GitHub</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="project-card">
+        <div class="card-thumb thumb-iot">
+          <div class="card-thumb-inner">🤖</div>
+          <div class="card-badge parc">PARC 2025</div>
+        </div>
+        <div class="card-body">
+          <div class="card-title">Autonomous Robot</div>
+          <div class="card-desc">C++ & Python navigation system for the Pan-African Robotics Competition AI League. Real-time environment processing with sensor fusion and IoT modules.</div>
+          <div class="card-tags">
+            <span class="tag">C++</span>
+            <span class="tag">Python</span>
+            <span class="tag">ROS</span>
+            <span class="tag">Sensor Fusion</span>
+          </div>
+          <div class="card-footer">
+            <a href="https://github.com/kevchege" target="_blank" class="card-link gh">GitHub</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="project-card">
+        <div class="card-thumb thumb-iot">
+          <div class="card-thumb-inner">📡</div>
+          <div class="card-badge wip">In Progress</div>
+        </div>
+        <div class="card-body">
+          <div class="card-title">IoT Dashboard</div>
+          <div class="card-desc">Real-time sensor monitoring dashboard. ESP32 reads soil moisture, temperature, and humidity via MQTT — data streams live to a web frontend.</div>
+          <div class="card-tags">
+            <span class="tag">ESP32</span>
+            <span class="tag">MQTT</span>
+            <span class="tag">Arduino</span>
+            <span class="tag">React</span>
+          </div>
+          <div class="card-footer">
+            <a href="#" class="card-link soon-link">Coming Soon</a>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ROW 2: Web Development -->
+<section class="reveal">
+  <div class="section-header">
+    <div class="section-cat"><span>02</span> — Web Development</div>
+    <div class="section-line"></div>
+    <div class="section-count">2 projects</div>
+  </div>
+  <div class="row-container">
+    <div class="project-row">
+
+      <div class="project-card">
+        <div class="card-thumb thumb-web">
+          <div class="card-thumb-inner">🌾</div>
+          <div class="card-badge live">Live</div>
+        </div>
+        <div class="card-body">
+          <div class="card-title">Agroke</div>
+          <div class="card-desc">AgriTech web platform built to modernise farming for small-scale Kenyan farmers. Provides crop management tools, market access, and farming guidance. Pivoting to a startup.</div>
+          <div class="card-tags">
+            <span class="tag">HTML</span>
+            <span class="tag">CSS</span>
+            <span class="tag">JavaScript</span>
+            <span class="tag">AgriTech</span>
+          </div>
+          <div class="card-footer">
+            <a href="https://github.com/kevchege/Agriculture-webpage" target="_blank" class="card-link gh">GitHub</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="project-card">
+        <div class="card-thumb thumb-web">
+          <div class="card-thumb-inner">📖</div>
+          <div class="card-badge live">Live</div>
+        </div>
+        <div class="card-body">
+          <div class="card-title">Library Management System</div>
+          <div class="card-desc">Full OOP design with complete UML documentation — use case diagrams, class diagrams, and sequence diagrams. Demonstrates software architecture skills.</div>
+          <div class="card-tags">
+            <span class="tag">OOP</span>
+            <span class="tag">UML</span>
+            <span class="tag">Java</span>
+            <span class="tag">Design</span>
+          </div>
+          <div class="card-footer">
+            <a href="https://github.com/kevchege" target="_blank" class="card-link gh">GitHub</a>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ROW 3: Software & Systems -->
+<section class="reveal">
+  <div class="section-header">
+    <div class="section-cat"><span>03</span> — Software & Systems</div>
+    <div class="section-line"></div>
+    <div class="section-count">1 project</div>
+  </div>
+  <div class="row-container">
+    <div class="project-row">
+
+      <div class="project-card">
+        <div class="card-thumb thumb-soft">
+          <div class="card-thumb-inner">📈</div>
+          <div class="card-badge wip">In Progress</div>
+        </div>
+        <div class="card-body">
+          <div class="card-title">Grid-Bot Trader</div>
+          <div class="card-desc">Automated grid trading bot built for a client. Executes buy/sell orders within a defined price range, automating crypto trading strategy with configurable parameters.</div>
+          <div class="card-tags">
+            <span class="tag">Python</span>
+            <span class="tag">API</span>
+            <span class="tag">Trading</span>
+            <span class="tag">Automation</span>
+          </div>
+          <div class="card-footer">
+            <a href="#" class="card-link soon-link">Private</a>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ROW 4: Coming Soon -->
+<section class="reveal">
+  <div class="section-header">
+    <div class="section-cat"><span>04</span> — Coming Soon</div>
+    <div class="section-line"></div>
+    <div class="section-count">Roadmap 2026</div>
+  </div>
+  <div class="row-container">
+    <div class="project-row">
+
+      <div class="project-card" style="opacity:0.6;">
+        <div class="card-soon-overlay"></div>
+        <div class="card-thumb thumb-soon">
+          <div class="card-thumb-inner">🌱</div>
+          <div class="card-badge soon">Planned</div>
+        </div>
+        <div class="card-body">
+          <div class="card-title">Agroke v2</div>
+          <div class="card-desc">Full-stack rebuild of Agroke. React frontend, Node.js + MySQL backend, real-time market prices, and a mobile-first design for Kenyan farmers.</div>
+          <div class="card-tags">
+            <span class="tag">React</span>
+            <span class="tag">Node.js</span>
+            <span class="tag">MySQL</span>
+          </div>
+          <div class="card-footer">
+            <a href="#" class="card-link soon-link">In Planning</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="project-card" style="opacity:0.6;">
+        <div class="card-soon-overlay"></div>
+        <div class="card-thumb thumb-soon">
+          <div class="card-thumb-inner">🌿</div>
+          <div class="card-badge soon">Planned</div>
+        </div>
+        <div class="card-body">
+          <div class="card-title">Smart Farm Node</div>
+          <div class="card-desc">Arduino/ESP32 sensor node that reads soil moisture, temperature, and sends live data to Agroke's dashboard via MQTT. Bridges hardware and software.</div>
+          <div class="card-tags">
+            <span class="tag">ESP32</span>
+            <span class="tag">Arduino</span>
+            <span class="tag">MQTT</span>
+          </div>
+          <div class="card-footer">
+            <a href="#" class="card-link soon-link">In Planning</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="project-card" style="opacity:0.6;">
+        <div class="card-soon-overlay"></div>
+        <div class="card-thumb thumb-soon">
+          <div class="card-thumb-inner">🔍</div>
+          <div class="card-badge soon">Planned</div>
+        </div>
+        <div class="card-body">
+          <div class="card-title">Network Scanner UI</div>
+          <div class="card-desc">Web interface for the Python network scanner. Flask REST API backend + React frontend — turns a CLI tool into a usable product.</div>
+          <div class="card-tags">
+            <span class="tag">Flask</span>
+            <span class="tag">React</span>
+            <span class="tag">Python</span>
+          </div>
+          <div class="card-footer">
+            <a href="#" class="card-link soon-link">In Planning</a>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+</div><!-- end #projects -->
+
+<!-- ── ABOUT ─────────────────────────────────────────────── -->
+<section id="about" class="reveal">
+  <div class="about-section">
+    <div>
+      <div class="about-label">// about.me</div>
+      <h2 class="about-heading">WHO<br>AM I<span style="color:var(--red)">?</span></h2>
+      <p class="about-body">
+        Third-year Computer Science student at Zetech University, Nairobi.
+        I build things — IoT systems, web platforms, and autonomous robots.
+        I also teach: I'm the IoT instructor for the Itech Community Club on campus,
+        where I've trained 20+ students in embedded systems and Arduino since September 2025.
+        <br><br>
+        In 2025 I competed at the Pan-African Robotics Competition in Dakar, Senegal,
+        representing Zetech in the AI League. My long-term mission is to build
+        profitable tech startups that solve real African problems.
+      </p>
+      <div class="skill-grid">
+        <div class="skill-chip">C++</div>
+        <div class="skill-chip">Python</div>
+        <div class="skill-chip">JavaScript</div>
+        <div class="skill-chip">MySQL</div>
+        <div class="skill-chip">Arduino</div>
+        <div class="skill-chip">ESP32</div>
+        <div class="skill-chip">MQTT</div>
+        <div class="skill-chip">Git</div>
+        <div class="skill-chip">HTML/CSS</div>
+      </div>
+    </div>
+
+    <div class="about-terminal">
+      <div class="at-bar">
+        <div class="t-dot r"></div><div class="t-dot y"></div><div class="t-dot g"></div>
+        <span class="terminal-title" style="margin-left:8px">profile.json</span>
+      </div>
+      <div class="at-body">
+        <div>{</div>
+        <div>&nbsp;&nbsp;<span class="at-key">"name"</span><span class="at-colon">: </span><span class="at-str">"Kevin Chege"</span>,</div>
+        <div>&nbsp;&nbsp;<span class="at-key">"email"</span><span class="at-colon">: </span><span class="at-str">"kevchege115@gmail.com"</span>,</div>
+        <div>&nbsp;&nbsp;<span class="at-key">"phone"</span><span class="at-colon">: </span><span class="at-str">"+254 728 945 553"</span>,</div>
+        <div>&nbsp;&nbsp;<span class="at-key">"location"</span><span class="at-colon">: </span><span class="at-str">"Nairobi, Kenya 🇰🇪"</span>,</div>
+        <div>&nbsp;&nbsp;<span class="at-key">"university"</span><span class="at-colon">: </span><span class="at-str">"Zetech University"</span>,</div>
+        <div>&nbsp;&nbsp;<span class="at-key">"degree"</span><span class="at-colon">: </span><span class="at-str">"BSc Computer Science"</span>,</div>
+        <div>&nbsp;&nbsp;<span class="at-key">"year"</span><span class="at-colon">: </span><span class="at-val">3</span>,</div>
+        <div>&nbsp;&nbsp;<span class="at-key">"github"</span><span class="at-colon">: </span><span class="at-str">"github.com/kevchege"</span>,</div>
+        <div>&nbsp;&nbsp;<span class="at-key">"linkedin"</span><span class="at-colon">: </span><span class="at-str">"linkedin.com/in/kevin-chege..."</span>,</div>
+        <div>&nbsp;&nbsp;<span class="at-key">"achievement"</span><span class="at-colon">: </span><span class="at-str">"PARC 2025 AI League 🏆"</span>,</div>
+        <div>&nbsp;&nbsp;<span class="at-key">"startup"</span><span class="at-colon">: </span><span class="at-str">"Agroke (AgriTech) 🌾"</span>,</div>
+        <div>&nbsp;&nbsp;<span class="at-key">"open_to"</span><span class="at-colon">: </span><span class="at-str">"Internships &amp; Freelance"</span></div>
+        <div>}</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── CONTACT ─────────────────────────────────────────── -->
+<section id="contact" class="contact-section reveal">
+  <div class="contact-grid">
+    <div>
+      <div class="about-label">// contact.me</div>
+      <h2 class="contact-heading">LET'S<br><span>BUILD</span><br>TOGETHER</h2>
+      <p class="contact-desc">
+        Open to internship opportunities, freelance projects, and collaborations.
+        Building something in Africa? Let's talk.
+      </p>
+      <div class="social-links">
+        <a href="mailto:kevchege115@gmail.com" class="social-link">
+          <span class="social-icon">// EMAIL</span>
+          kevchege115@gmail.com
+        </a>
+        <a href="https://github.com/kevchege" target="_blank" class="social-link">
+          <span class="social-icon">// GITHUB</span>
+          github.com/kevchege
+        </a>
+        <a href="https://www.linkedin.com/in/kevin-chege-952020379" target="_blank" class="social-link">
+          <span class="social-icon">// LINKEDIN</span>
+          linkedin.com/in/kevin-chege
+        </a>
+        <a href="tel:+254728945553" class="social-link">
+          <span class="social-icon">// PHONE</span>
+          +254 728 945 553
+        </a>
+      </div>
+    </div>
+
+    <form class="contact-form" onsubmit="handleSubmit(event)">
+      <div class="form-group">
+        <label>Your Name</label>
+        <input type="text" placeholder="John Doe" required>
+      </div>
+      <div class="form-group">
+        <label>Email</label>
+        <input type="email" placeholder="you@example.com" required>
+      </div>
+      <div class="form-group">
+        <label>Message</label>
+        <textarea rows="5" placeholder="Tell me about your project..." required></textarea>
+      </div>
+      <button type="submit" class="form-submit">Send Message ↗</button>
+    </form>
+  </div>
+</section>
+
+<!-- ── FOOTER ─────────────────────────────────────────── -->
+<footer>
+  <div class="footer-logo">KC.</div>
+  <div>© 2026 Kevin Chege — Built with HTML, CSS & JavaScript</div>
+  <div>Nairobi, Kenya 🇰🇪</div>
+</footer>
+
+<script>
+// ── Custom cursor
+const cursor = document.getElementById('cursor');
+const ring   = document.getElementById('cursorRing');
+let mx=0,my=0,rx=0,ry=0;
+document.addEventListener('mousemove', e=>{
+  mx=e.clientX; my=e.clientY;
+  cursor.style.left=mx+'px'; cursor.style.top=my+'px';
+});
+function animRing(){
+  rx+=(mx-rx)*0.12; ry+=(my-ry)*0.12;
+  ring.style.left=rx+'px'; ring.style.top=ry+'px';
+  requestAnimationFrame(animRing);
+}
+animRing();
+
+// ── Navbar scroll
+window.addEventListener('scroll',()=>{
+  document.getElementById('navbar').classList.toggle('scrolled', window.scrollY>60);
+});
+
+// ── Scroll reveal
+const observer = new IntersectionObserver(entries=>{
+  entries.forEach(e=>{ if(e.isIntersecting) e.target.classList.add('visible'); });
+},{threshold:0.1});
+document.querySelectorAll('.reveal').forEach(el=>observer.observe(el));
+
+// ── Contact form
+function handleSubmit(e){
+  e.preventDefault();
+  const form = e.target;
+  const name = form.querySelector('input[type=text]').value;
+  const email = form.querySelector('input[type=email]').value;
+  const msg = form.querySelector('textarea').value;
+  const subject = encodeURIComponent(`Portfolio Contact from ${name}`);
+  const body = encodeURIComponent(`Name: ${name}\nEmail: ${email}\n\nMessage:\n${msg}`);
+  window.location.href = `mailto:kevchege115@gmail.com?subject=${subject}&body=${body}`;
+}
+
+// ── Typed effect in terminal
+const lines = document.querySelectorAll('.terminal-body > div');
+lines.forEach((el,i)=>{
+  el.style.opacity='0';
+  setTimeout(()=>{
+    el.style.transition='opacity 0.3s';
+    el.style.opacity='1';
+  }, i*200 + 800);
+});
+</script>
+</body>
+</html>
