@@ -2176,16 +2176,48 @@ function animateLiveTerminal(terminalId) {
 // ═══════════════════════════════════════════════════
 // CONTACT FORM
 // ═══════════════════════════════════════════════════
-function handleSubmit(e) {
+async function handleSubmit(e) {
   e.preventDefault();
-  const form    = e.target;
-  const name    = form.querySelector('input[type=text]').value;
-  const email   = form.querySelector('input[type=email]').value;
-  const subject = form.querySelectorAll('input[type=text]')[1]?.value || 'Portfolio Contact';
-  const msg     = form.querySelector('textarea').value;
-  const sub     = encodeURIComponent(`${subject} — from ${name}`);
-  const body    = encodeURIComponent(`Name: ${name}\nEmail: ${email}\n\nMessage:\n${msg}`);
-  window.location.href = `mailto:kevchege115@gmail.com?subject=${sub}&body=${body}`;
+  const form = e.target;
+  const submitBtn = form.querySelector('.form-submit');
+  const originalBtnText = submitBtn.innerHTML;
+
+  // Visual feedback for the 'Cyberpunk' vibe
+  submitBtn.innerHTML = "CONNECTING...";
+  submitBtn.disabled = true;
+
+  const formData = new FormData(form);
+  const object = Object.fromEntries(formData);
+  const json = JSON.stringify(object);
+
+  try {
+    const response = await fetch("https://api.web3forms.com/submit", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+      },
+      body: json,
+    });
+    
+    const result = await response.json();
+
+    if (result.success) {
+      submitBtn.innerHTML = "MESSAGE SENT! ✓";
+      submitBtn.style.background = "#00aa44"; // Green success glow
+      form.reset();
+    } else {
+      submitBtn.innerHTML = "UPLOAD FAILED ✗";
+    }
+  } catch (error) {
+    submitBtn.innerHTML = "CONNECTION ERROR ✗";
+  } finally {
+    setTimeout(() => {
+      submitBtn.innerHTML = originalBtnText;
+      submitBtn.disabled = false;
+      submitBtn.style.background = ""; 
+    }, 3000);
+  }
 }
 </script>
 </body>
