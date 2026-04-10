@@ -164,15 +164,16 @@ body {
 .profile-just-btn:hover { color: white; border-color: rgba(255,255,255,0.35); }
 
 /* ═══════════════════════════════════════════════════════
-   NAVBAR
+   NAVBAR — fully responsive at all widths
 ═══════════════════════════════════════════════════════ */
 nav {
   position: fixed; top: 0; left: 0; right: 0; z-index: 100;
   display: flex; align-items: center; justify-content: space-between;
   padding: 0 48px; height: 64px;
-  background: rgba(10,10,15,0.95);
-  backdrop-filter: blur(8px);
-  border-bottom: 1px solid var(--border);
+  background: rgba(10,10,15,0.97);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid rgba(255,255,255,0.09);
+  flex-wrap: nowrap; min-width: 0; gap: 16px;
 }
 
 .nav-logo {
@@ -180,23 +181,24 @@ nav {
   letter-spacing: 3px; color: var(--red);
   text-shadow: 0 0 20px var(--red-glow);
   text-decoration: none; cursor: none;
+  flex-shrink: 0;
 }
 .nav-logo span { color: var(--text); }
 
-.nav-links { display: flex; gap: 32px; list-style: none; }
+.nav-links { display: flex; gap: 28px; list-style: none; flex-shrink: 1; }
 .nav-links a {
-  color: var(--muted); text-decoration: none;
+  color: rgba(232,232,240,0.85); text-decoration: none;
   font-size: 14px; font-weight: 700;
   letter-spacing: 2px; text-transform: uppercase;
   transition: color 0.2s; cursor: none;
-  position: relative; padding-bottom: 4px;
+  position: relative; padding-bottom: 4px; white-space: nowrap;
 }
 .nav-links a::after {
   content:''; position:absolute; bottom:0; left:0; right:0;
   height: 2px; background: var(--red);
   transform: scaleX(0); transition: transform 0.2s;
 }
-.nav-links a:hover, .nav-links a.active { color: var(--text); }
+.nav-links a:hover, .nav-links a.active { color: white; }
 .nav-links a.active::after, .nav-links a:hover::after { transform: scaleX(1); }
 
 .nav-cta {
@@ -206,8 +208,17 @@ nav {
   letter-spacing: 2px; text-transform: uppercase;
   cursor: none; transition: all 0.2s; text-decoration: none;
   box-shadow: 0 0 20px var(--red-glow);
+  flex-shrink: 0; white-space: nowrap;
 }
 .nav-cta:hover { background: #ff1a26; }
+
+/* Medium desktop — tighten before mobile breakpoint */
+@media(max-width:1100px) and (min-width:901px) {
+  nav { padding: 0 28px; }
+  .nav-links { gap: 18px; }
+  .nav-links a { font-size: 13px; letter-spacing: 1.5px; }
+  .nav-cta { padding: 9px 18px; font-size: 12px; }
+}
 
 /* Back to profiles */
 .back-btn {
@@ -461,14 +472,22 @@ nav {
 .at-val   { color: #a0e080; }
 .at-str   { color: #ff9d6e; }
 
-/* Vibe terminal on stalker page — floating like hero terminal */
+/* Vibe terminal — sits in document flow, no float animation */
 .vibe-terminal {
   background: rgba(16,16,26,0.92);
   border: 1px solid rgba(0,212,255,0.18);
-  border-radius: 10px; overflow: hidden;
-  box-shadow: 0 0 40px rgba(0,212,255,0.07), 0 20px 60px rgba(0,0,0,0.5);
+  border-radius: 10px;
+  box-shadow: 0 0 30px rgba(0,212,255,0.07), 0 8px 32px rgba(0,0,0,0.4);
   backdrop-filter: blur(16px);
-  animation: termFloat 6s ease-in-out infinite alternate;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  /* Subtle pulse glow instead of float — won't displace layout */
+  animation: termGlow 4s ease-in-out infinite alternate;
+}
+@keyframes termGlow {
+  from { box-shadow: 0 0 20px rgba(0,212,255,0.06), 0 8px 32px rgba(0,0,0,0.4); }
+  to   { box-shadow: 0 0 40px rgba(0,212,255,0.14), 0 8px 40px rgba(0,0,0,0.5); }
 }
 /* Live terminal cursor blink */
 .term-live-cursor {
@@ -769,7 +788,16 @@ body::after {
 }
 
 /* Stalker / personality page */
-.stalk-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 48px; margin-top: 40px; align-items: start; }
+.stalk-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 48px;
+  margin-top: 40px;
+  align-items: start;
+  /* Prevent right column from overflowing */
+  min-width: 0;
+}
+.stalk-grid > div { min-width: 0; overflow: visible; }
 .fun-fact {
   display: flex; gap: 14px; align-items: flex-start;
   padding: 16px; margin-bottom: 12px;
@@ -814,10 +842,13 @@ nav.minimal .nav-links { display: none !important; }
 @media(max-width:900px){
   .hero, .about-page, .projects-page, .contact-page { padding: 40px 28px; }
   .hero-terminal { display:none; }
-  .about-grid, .contact-grid { grid-template-columns:1fr; gap:40px; }
+  .about-grid, .contact-grid, .stalk-grid { grid-template-columns:1fr; gap:32px; }
   nav { padding:0 24px; }
   .nav-links { display:none; }
   footer { flex-direction:column; gap:10px; text-align:center; padding:24px; }
+  .profile-page { padding: 40px 28px; }
+  .dev-grid, .services-grid { grid-template-columns:1fr; }
+  .cv-grid { grid-template-columns:1fr; }
 
   /* ── Profile selector — scrollable on mobile ── */
   #profile-screen {
@@ -1906,45 +1937,49 @@ nav.minimal .nav-links { display: none !important; }
           </div>
         </div>
 
-        <!-- Right — interests + vibe -->
-        <div>
-          <div class="cv-section-title" style="margin-bottom:18px;">// things i'm into</div>
-          <div class="interest-row">
-            <div class="interest-chip">⚽ Football</div>
-            <div class="interest-chip">🎮 Dream League Soccer</div>
-            <div class="interest-chip">🎯 FPS Games</div>
-            <div class="interest-chip">📺 Anime & Manga</div>
-            <div class="interest-chip">🤖 Robotics</div>
-            <div class="interest-chip">🎬 Cinematic Storytelling</div>
-            <div class="interest-chip">🌍 African Tech</div>
-            <div class="interest-chip">📡 IoT Tinkering</div>
-            <div class="interest-chip">💡 Startups</div>
-            <div class="interest-chip">🎵 Music</div>
-          </div>
-
-          <div class="cv-section-title" style="margin-bottom:18px;margin-top:28px;">// the vibe check</div>
-          <div class="vibe-terminal">
-            <div class="at-bar">
-              <div class="t-dot r"></div><div class="t-dot y"></div><div class="t-dot g"></div>
-              <span class="terminal-title" style="margin-left:8px;">vibe.json</span>
-            </div>
-            <div class="at-body live-type" id="vibe-terminal-body" style="font-size:13px;line-height:2;">
-              <div>{</div>
-              <div>&nbsp;&nbsp;<span class="at-key">"energy"</span><span class="at-colon">: </span><span class="at-str">"calm but driven"</span>,</div>
-              <div>&nbsp;&nbsp;<span class="at-key">"works_best"</span><span class="at-colon">: </span><span class="at-str">"late nights with headphones in"</span>,</div>
-              <div>&nbsp;&nbsp;<span class="at-key">"communication"</span><span class="at-colon">: </span><span class="at-str">"direct, no fluff"</span>,</div>
-              <div>&nbsp;&nbsp;<span class="at-key">"biggest_flex"</span><span class="at-colon">: </span><span class="at-str">"flew to Senegal for robots"</span>,</div>
-              <div>&nbsp;&nbsp;<span class="at-key">"life_goal"</span><span class="at-colon">: </span><span class="at-str">"build things that outlast me"</span>,</div>
-              <div>&nbsp;&nbsp;<span class="at-key">"currently"</span><span class="at-colon">: </span><span class="at-str">"building Agroke + looking for internship"</span>,</div>
-              <div>&nbsp;&nbsp;<span class="at-key">"weakness"</span><span class="at-colon">: </span><span class="at-str">"perfectionism (but, like, the productive kind)"</span>,</div>
-              <div>&nbsp;&nbsp;<span class="at-key">"open_to_dm"</span><span class="at-colon">: </span><span class="at-val">true</span></div>
-              <div>}<span class="term-live-cursor"></span></div>
+        <!-- Right — interests + terminal stacked naturally -->
+        <div style="display:flex;flex-direction:column;gap:28px;">
+          <div>
+            <div class="cv-section-title" style="margin-bottom:18px;">// things i'm into</div>
+            <div class="interest-row">
+              <div class="interest-chip">⚽ Football</div>
+              <div class="interest-chip">🎮 Dream League Soccer</div>
+              <div class="interest-chip">🎯 FPS Games</div>
+              <div class="interest-chip">📺 Anime & Manga</div>
+              <div class="interest-chip">🤖 Robotics</div>
+              <div class="interest-chip">🎬 Cinematic Storytelling</div>
+              <div class="interest-chip">🌍 African Tech</div>
+              <div class="interest-chip">📡 IoT Tinkering</div>
+              <div class="interest-chip">💡 Startups</div>
+              <div class="interest-chip">🎵 Music</div>
             </div>
           </div>
 
-          <div style="margin-top:24px;padding:20px;background:var(--card-bg);border:1px solid var(--border);border-radius:8px;">
+          <div>
+            <div class="cv-section-title" style="margin-bottom:18px;">// the vibe check</div>
+            <div class="vibe-terminal">
+              <div class="at-bar">
+                <div class="t-dot r"></div><div class="t-dot y"></div><div class="t-dot g"></div>
+                <span class="terminal-title" style="margin-left:8px;">vibe.json</span>
+              </div>
+              <div class="at-body live-type" id="vibe-terminal-body" style="font-size:13px;line-height:1.9;">
+                <div>{</div>
+                <div>&nbsp;&nbsp;<span class="at-key">"energy"</span><span class="at-colon">: </span><span class="at-str">"calm but driven"</span>,</div>
+                <div>&nbsp;&nbsp;<span class="at-key">"works_best"</span><span class="at-colon">: </span><span class="at-str">"late nights with headphones in"</span>,</div>
+                <div>&nbsp;&nbsp;<span class="at-key">"communication"</span><span class="at-colon">: </span><span class="at-str">"direct, no fluff"</span>,</div>
+                <div>&nbsp;&nbsp;<span class="at-key">"biggest_flex"</span><span class="at-colon">: </span><span class="at-str">"flew to Senegal for robots"</span>,</div>
+                <div>&nbsp;&nbsp;<span class="at-key">"life_goal"</span><span class="at-colon">: </span><span class="at-str">"build things that outlast me"</span>,</div>
+                <div>&nbsp;&nbsp;<span class="at-key">"currently"</span><span class="at-colon">: </span><span class="at-str">"building Agroke + looking for internship"</span>,</div>
+                <div>&nbsp;&nbsp;<span class="at-key">"weakness"</span><span class="at-colon">: </span><span class="at-str">"perfectionism (but, like, the productive kind)"</span>,</div>
+                <div>&nbsp;&nbsp;<span class="at-key">"open_to_dm"</span><span class="at-colon">: </span><span class="at-val">true</span></div>
+                <div>}<span class="term-live-cursor"></span></div>
+              </div>
+            </div>
+          </div>
+
+          <div style="padding:24px;background:var(--card-bg);border:1px solid var(--border);border-radius:8px;">
             <div class="cv-section-title" style="margin-bottom:10px;">// since you're already here</div>
-            <p style="font-size:14px;color:rgba(232,232,240,0.65);line-height:1.7;margin-bottom:16px;">
+            <p style="font-size:15px;color:rgba(232,232,240,0.7);line-height:1.7;margin-bottom:20px;">
               You've made it this far — might as well say hi. I don't bite.
             </p>
             <a href="#" onclick="showPage('contact');return false;" class="cv-download" style="margin-top:0;">
