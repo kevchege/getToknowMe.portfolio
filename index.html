@@ -836,15 +836,73 @@ body::after {
 /* Nav minimal mode — logo + github only, no page links */
 nav.minimal .nav-links { display: none !important; }
 
+/* Hamburger hidden on desktop */
+.hamburger { display: none; }
+.mobile-menu { display: none; }
+@media(max-width:900px) {
+  .hamburger { display: flex; }
+  .mobile-menu { display: flex; }
+}
+
 /* ═══════════════════════════════════════════════════════
    MOBILE
 ═══════════════════════════════════════════════════════ */
 @media(max-width:900px){
+  /* Hide custom cursor entirely on touch devices */
+  .cursor, .cursor-ring { display: none !important; }
+  body, a, button { cursor: auto !important; }
+
   .hero, .about-page, .projects-page, .contact-page { padding: 40px 28px; }
   .hero-terminal { display:none; }
   .about-grid, .contact-grid, .stalk-grid { grid-template-columns:1fr; gap:32px; }
   nav { padding:0 24px; }
   .nav-links { display:none; }
+
+  /* Hamburger button */
+  .hamburger {
+    display: flex; flex-direction: column; gap: 5px;
+    background: none; border: none; cursor: pointer;
+    padding: 8px; z-index: 200;
+  }
+  .hamburger span {
+    display: block; width: 24px; height: 2px;
+    background: var(--text); border-radius: 2px;
+    transition: all 0.3s ease;
+  }
+  .hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+  .hamburger.open span:nth-child(2) { opacity: 0; transform: scaleX(0); }
+  .hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+  /* Mobile dropdown menu */
+  .mobile-menu {
+    position: fixed; top: 64px; left: 0; right: 0; z-index: 99;
+    background: rgba(10,10,15,0.98);
+    backdrop-filter: blur(16px);
+    border-bottom: 1px solid rgba(229,9,20,0.2);
+    display: flex; flex-direction: column;
+    padding: 0;
+    max-height: 0; overflow: hidden;
+    transition: max-height 0.35s ease, padding 0.35s ease;
+  }
+  .mobile-menu.open {
+    max-height: 320px;
+    padding: 12px 0 20px;
+  }
+  .mobile-menu a {
+    color: rgba(232,232,240,0.85); text-decoration: none;
+    font-family: var(--font-ui); font-size: 18px; font-weight: 700;
+    letter-spacing: 3px; text-transform: uppercase;
+    padding: 14px 28px;
+    border-left: 3px solid transparent;
+    transition: all 0.2s;
+    display: block;
+  }
+  .mobile-menu a:hover, .mobile-menu a.active {
+    color: white;
+    border-left-color: var(--red);
+    background: rgba(229,9,20,0.06);
+    padding-left: 36px;
+  }
   footer { flex-direction:column; gap:10px; text-align:center; padding:24px; }
   .profile-page { padding: 40px 28px; }
   .dev-grid, .services-grid { grid-template-columns:1fr; }
@@ -890,7 +948,10 @@ nav.minimal .nav-links { display: none !important; }
   .profile-just-btn { font-size: 14px; padding: 10px 24px; }
 }
 
-/* Dots + swipe hint — not needed, keep hidden everywhere */
+/* Profile screen mobile dropdown — needs higher z-index to sit above profile-screen content */
+#profile-mobile-menu {
+  z-index: 850;
+}
 .profile-dots { display: none; }
 .swipe-hint   { display: none; }
 </style>
@@ -920,7 +981,19 @@ nav.minimal .nav-links { display: none !important; }
       <li><a href="#" onclick="goDirectToPage('projects');return false;">Projects</a></li>
       <li><a href="#" onclick="goDirectToPage('contact');return false;">Contact</a></li>
     </ul>
+    <!-- Hamburger — mobile only -->
+    <button class="hamburger" id="profile-hamburger" onclick="toggleProfileMenu()" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
     <a href="https://github.com/kevchege" target="_blank" class="profile-topbar-gh">GitHub ↗</a>
+  </div>
+
+  <!-- Profile screen mobile dropdown -->
+  <div class="mobile-menu" id="profile-mobile-menu">
+    <a href="#" onclick="profileMobileNav('home')">Home</a>
+    <a href="#" onclick="profileMobileNav('about')">About</a>
+    <a href="#" onclick="profileMobileNav('projects')">Projects</a>
+    <a href="#" onclick="profileMobileNav('contact')">Contact</a>
   </div>
 
   <!-- Centered selector -->
@@ -975,8 +1048,20 @@ nav.minimal .nav-links { display: none !important; }
       <li><a href="#" onclick="showPage('projects');return false;" data-page="projects">Projects</a></li>
       <li><a href="#" onclick="showPage('contact');return false;" data-page="contact">Contact</a></li>
     </ul>
+    <!-- Hamburger — mobile only -->
+    <button class="hamburger" id="hamburger" onclick="toggleMobileMenu()" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
     <a href="https://github.com/kevchege" target="_blank" class="nav-cta">GitHub ↗</a>
   </nav>
+
+  <!-- Mobile dropdown menu -->
+  <div class="mobile-menu" id="mobile-menu">
+    <a href="#" onclick="mobileNav('home')" data-page="home">Home</a>
+    <a href="#" onclick="mobileNav('about')" data-page="about">About</a>
+    <a href="#" onclick="mobileNav('projects')" data-page="projects">Projects</a>
+    <a href="#" onclick="mobileNav('contact')" data-page="contact">Contact</a>
+  </div>
 
   <!-- BACK TO PROFILES -->
   <button class="back-btn" onclick="goBackToProfiles()">
@@ -1540,28 +1625,33 @@ nav.minimal .nav-links { display: none !important; }
 
         <!-- Right — form -->
         <form class="contact-form" onsubmit="handleSubmit(event)">
-  <input type="hidden" name="access_key" value="b64cb0f8-4718-49ab-896f-e480bdc724eb">
-  
-  <input type="checkbox" name="botcheck" class="hidden" style="display: none;">
+          <input type="hidden" name="access_key" value="b64cb0f8-4718-49ab-896f-e480bdc724eb">
+          <input type="checkbox" name="botcheck" style="display:none;">
 
-  <div class="form-group">
-    <label>Your Name</label>
-    <input type="text" name="name" placeholder="Full names" required>
-  </div>
-  <div class="form-group">
-    <label>Email</label>
-    <input type="email" name="email" placeholder="you@example.com" required>
-  </div>
-  <div class="form-group">
-    <label>Subject</label>
-    <input type="text" name="subject" placeholder="Internship / Freelance / Collaboration / Work Contract / etc." required>
-  </div>
-  <div class="form-group">
-    <label>Message</label>
-    <textarea name="message" rows="5" placeholder="Tell me about your project or opportunity..." required></textarea>
-  </div>
-  <button type="submit" class="form-submit">Send Message ↗</button>
-</form>
+          <div class="form-group">
+            <label>Your Name</label>
+            <input type="text" name="name" placeholder="Full names" required>
+          </div>
+          <div class="form-group">
+            <label>Email</label>
+            <input type="email" name="email" placeholder="you@example.com" required>
+          </div>
+          <div class="form-group">
+            <label>Subject</label>
+            <input type="text" name="subject" placeholder="Internship / Freelance / Collaboration">
+          </div>
+          <div class="form-group">
+            <label>Message</label>
+            <textarea name="message" rows="5" placeholder="Tell me about your project or opportunity..." required></textarea>
+          </div>
+          <div class="h-captcha"
+            data-sitekey="5a448e56-1890-422c-bb7c-07d8e1b8a706"
+            data-theme="dark"
+            data-size="normal">
+          </div>
+          <script src="https://js.hcaptcha.com/1/api.js" async defer></script>
+          <button type="submit" class="form-submit">Send Message ↗</button>
+        </form>
 
       </div>
     </div>
@@ -2123,7 +2213,7 @@ function showPage(name) {
 
   const navMap = { recruiter:'about', developer:'about', client:'contact', stalker:'about' };
   const navTarget = navMap[name] || name;
-  document.querySelectorAll('.nav-links a').forEach(a => {
+  document.querySelectorAll('.nav-links a, .mobile-menu a').forEach(a => {
     a.classList.toggle('active', a.dataset.page === navTarget);
   });
 
@@ -2174,16 +2264,77 @@ function animateLiveTerminal(terminalId) {
 }
 
 // ═══════════════════════════════════════════════════
-// CONTACT FORM
+// MOBILE HAMBURGER MENU
+// ═══════════════════════════════════════════════════
+function toggleMobileMenu() {
+  const menu = document.getElementById('mobile-menu');
+  const btn  = document.getElementById('hamburger');
+  const isOpen = menu.classList.toggle('open');
+  btn.classList.toggle('open', isOpen);
+}
+
+function mobileNav(page) {
+  // Close menu
+  document.getElementById('mobile-menu').classList.remove('open');
+  document.getElementById('hamburger').classList.remove('open');
+  // Navigate
+  showPage(page);
+}
+
+// Profile screen hamburger (separate instance — profile screen is not inside #app)
+function toggleProfileMenu() {
+  const menu = document.getElementById('profile-mobile-menu');
+  const btn  = document.getElementById('profile-hamburger');
+  const isOpen = menu.classList.toggle('open');
+  btn.classList.toggle('open', isOpen);
+}
+
+function profileMobileNav(page) {
+  document.getElementById('profile-mobile-menu').classList.remove('open');
+  document.getElementById('profile-hamburger').classList.remove('open');
+  goDirectToPage(page);
+}
+
+// Close menus when clicking outside
+document.addEventListener('click', e => {
+  // App hamburger
+  const menu = document.getElementById('mobile-menu');
+  const btn  = document.getElementById('hamburger');
+  if (menu && btn && !menu.contains(e.target) && !btn.contains(e.target)) {
+    menu.classList.remove('open');
+    btn.classList.remove('open');
+  }
+  // Profile screen hamburger
+  const pmenu = document.getElementById('profile-mobile-menu');
+  const pbtn  = document.getElementById('profile-hamburger');
+  if (pmenu && pbtn && !pmenu.contains(e.target) && !pbtn.contains(e.target)) {
+    pmenu.classList.remove('open');
+    pbtn.classList.remove('open');
+  }
+});
+
+// ═══════════════════════════════════════════════════
+// CONTACT FORM — Web3Forms + hCaptcha
 // ═══════════════════════════════════════════════════
 async function handleSubmit(e) {
   e.preventDefault();
   const form = e.target;
   const submitBtn = form.querySelector('.form-submit');
-  const originalBtnText = submitBtn.innerHTML;
+  const originalText = submitBtn.innerHTML;
 
-  // Visual feedback for the 'Cyberpunk' vibe
-  submitBtn.innerHTML = "CONNECTING...";
+  // Check hCaptcha is solved
+  const captchaField = form.querySelector('[name="h-captcha-response"]');
+  if (!captchaField || !captchaField.value) {
+    submitBtn.innerHTML = 'PLEASE COMPLETE CAPTCHA 🤖';
+    submitBtn.style.background = '#cc8800';
+    setTimeout(() => {
+      submitBtn.innerHTML = originalText;
+      submitBtn.style.background = '';
+    }, 2500);
+    return;
+  }
+
+  submitBtn.innerHTML = 'SENDING...';
   submitBtn.disabled = true;
 
   const formData = new FormData(form);
@@ -2191,32 +2342,31 @@ async function handleSubmit(e) {
   const json = JSON.stringify(object);
 
   try {
-    const response = await fetch("https://api.web3forms.com/submit", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Accept: "application/json",
-      },
+    const res = await fetch('https://api.web3forms.com/submit', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
       body: json,
     });
-    
-    const result = await response.json();
+    const result = await res.json();
 
     if (result.success) {
-      submitBtn.innerHTML = "MESSAGE SENT! ✓";
-      submitBtn.style.background = "#00aa44"; // Green success glow
+      submitBtn.innerHTML = 'MESSAGE SENT ✓';
+      submitBtn.style.background = '#00aa44';
       form.reset();
+      if (typeof hcaptcha !== 'undefined') hcaptcha.reset();
     } else {
-      submitBtn.innerHTML = "UPLOAD FAILED ✗";
+      submitBtn.innerHTML = 'SEND FAILED — TRY AGAIN ✗';
+      submitBtn.style.background = '#880000';
     }
-  } catch (error) {
-    submitBtn.innerHTML = "CONNECTION ERROR ✗";
+  } catch {
+    submitBtn.innerHTML = 'CONNECTION ERROR ✗';
+    submitBtn.style.background = '#880000';
   } finally {
     setTimeout(() => {
-      submitBtn.innerHTML = originalBtnText;
+      submitBtn.innerHTML = originalText;
+      submitBtn.style.background = '';
       submitBtn.disabled = false;
-      submitBtn.style.background = ""; 
-    }, 3000);
+    }, 4000);
   }
 }
 </script>
